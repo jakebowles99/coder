@@ -1,6 +1,7 @@
 version: "3.9"
+name: "coder"
 services:
-  coder:
+  server:
     # This MUST be stable for our documentation and
     # other automations.
     image: ghcr.io/coder/coder:${CODER_VERSION:-latest}
@@ -17,10 +18,13 @@ services:
     # the docker socket, you can uncomment the following
     # lines and set the group ID to one that has write
     # permissions on the docker socket.
-    #group_add:
-    #  - "998" # docker group on host
+    group_add:
+      - "998" # docker group on host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+      #- /home/j/.ssh/id_rsa:/home/coder/.ssh/id_rsa
+      #- /home/j/.ssh/id_rsa.pub:/home/coder/.ssh/id_rsa.pub
+      #- /home/j/homelab/coder/coder-templates:/home/coder/templates:Z
     depends_on:
       database:
         condition: service_healthy
