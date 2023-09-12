@@ -1,7 +1,6 @@
 version: "3.9"
-name: "coder"
 services:
-  server:
+  coder:
     # This MUST be stable for our documentation and
     # other automations.
     image: ghcr.io/coder/coder:${CODER_VERSION:-latest}
@@ -13,13 +12,13 @@ services:
       # You'll need to set CODER_ACCESS_URL to an IP or domain
       # that workspaces can reach. This cannot be localhost
       # or 127.0.0.1 for non-Docker templates!
-      CODER_ACCESS_URL: "${CODER_ACCESS_URL}"
+      CODER_ACCESS_URL: "http://127.0.0.1:7080"
     # If the coder user does not have write permissions on
     # the docker socket, you can uncomment the following
     # lines and set the group ID to one that has write
     # permissions on the docker socket.
     group_add:
-      - "998" # docker group on host
+      - "1001" # docker group on host
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       #- /home/j/.ssh/id_rsa:/home/coder/.ssh/id_rsa
